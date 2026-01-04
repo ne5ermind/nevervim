@@ -3,11 +3,10 @@ return {
 	dependencies = {
 		"jmbuhr/otter.nvim",
 		"nvim-treesitter/nvim-treesitter",
-		"benlubas/molten-nvim", -- обязательно, если используешь Molten как runner
+		"benlubas/molten-nvim",
 	},
-	ft = "quarto", -- загружать только при открытии .qmd
+	ft = { "quarto", "markdown" },
 	init = function()
-		-- Предзагрузка filetype, чтобы не было задержек
 		vim.filetype.add({
 			extension = {
 				qmd = "quarto",
@@ -16,7 +15,7 @@ return {
 	end,
 	opts = {
 		lspFeatures = {
-			languages = { "python", "r" }, -- укажи нужные
+			languages = { "python", "r" },
 			chunks = "all",
 			diagnostics = {
 				enabled = true,
@@ -35,7 +34,7 @@ return {
 		},
 		codeRunner = {
 			enabled = true,
-			default_method = "molten", -- ← это включает Molten
+			default_method = "molten",
 		},
 	},
 	keys = {

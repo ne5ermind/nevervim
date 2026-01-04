@@ -1,31 +1,28 @@
--- Run code in a floating window
-vim.keymap.set("n", "<leader>rk", function()
-	vim.cmd("write")
+local opts = { noremap = true, silent = true }
 
-	local filepath = vim.fn.expand("%:p")
-	if filepath == "" or not vim.fn.filereadable(filepath) then
-		vim.notify("File not saved", vim.log.levels.ERROR)
-		return
-	end
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
 
-	local filename = vim.fn.expand("%:t")
-	local safe_path = vim.fn.shellescape(filepath)
-	local kitty = "/usr/bin/kitty"
+vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>") -- disable search highlights
+vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]uickfix list" }) -- showing diagnostics
+vim.keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" }) -- exiting terminals quickly
+vim.keymap.set("n", "F", ":?", { desc = "enter search mode" }) -- enter search mode
 
-	local cmd_str = "tput clear 2>/dev/null; "
-		.. "echo 'Executing: "
-		.. filename
-		.. "'; "
-		.. "echo '----------------------'; "
-		.. "exec bash --norc -c 'time "
-		.. (vim.bo.filetype == "python" and "python3 " or vim.bo.filetype == "javascript" and "node " or (vim.env.SHELL or "/bin/bash") .. " ")
-		.. safe_path
-		.. "'"
+-- moving windows
+vim.keymap.set("n", "<C-h>", "<C-w><C-h>", { desc = "Move focus to the left window" })
+vim.keymap.set("n", "<C-l>", "<C-w><C-l>", { desc = "Move focus to the right window" })
+vim.keymap.set("n", "<C-j>", "<C-w><C-j>", { desc = "Move focus to the lower window" })
+vim.keymap.set("n", "<C-k>", "<C-w><C-k>", { desc = "Move focus to the upper window" })
 
-	vim.fn.jobstart({ kitty, "--hold", "--class", "KittyRunner", "bash", "--norc", "-c", cmd_str })
-end, { desc = "Run code in Kitty" })
+-- moving lines up // down // left // right
+vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", { desc = "moves lines down in visual selection " })
+vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", { desc = "moves lines down in visual selection " })
+vim.keymap.set("v", "<", "<gv", opts)
+vim.keymap.set("v", ">", ">gv", opts)
 
-vim.keymap.set("n", "<leader>q", vim.diagnostic.open_float, { desc = "Show diagnostic" })
+-- navigating search results
+vim.keymap.set("n", "n", "nzzzv")
+vim.keymap.set("n", "N", "Nzzzv")
 
 local map = vim.api.nvim_set_keymap
 local opts = { noremap = true, silent = true }
@@ -65,6 +62,34 @@ vim.keymap.set("i", "<A-j>", function()
 	end
 end, { expr = true, noremap = true, silent = true })
 
+-- Run code in a floating window
+vim.keymap.set("n", "<leader>rk", function()
+	vim.cmd("write")
+
+	local filepath = vim.fn.expand("%:p")
+	if filepath == "" or not vim.fn.filereadable(filepath) then
+		vim.notify("File not saved", vim.log.levels.ERROR)
+		return
+	end
+
+	local filename = vim.fn.expand("%:t")
+	local safe_path = vim.fn.shellescape(filepath)
+	local kitty = "/usr/bin/kitty"
+
+	local cmd_str = "tput clear 2>/dev/null; "
+		.. "echo 'Executing: "
+		.. filename
+		.. "'; "
+		.. "echo '----------------------'; "
+		.. "exec bash --norc -c 'time "
+		.. (vim.bo.filetype == "python" and "python3 " or vim.bo.filetype == "javascript" and "node " or (vim.env.SHELL or "/bin/bash") .. " ")
+		.. safe_path
+		.. "'"
+
+	vim.fn.jobstart({ kitty, "--hold", "--class", "KittyRunner", "bash", "--norc", "-c", cmd_str })
+end, { desc = "Run code in Kitty" })
+
+-- navigating autocmp results
 vim.keymap.set("i", "<A-k>", function()
 	if vim.fn.pumvisible() == 1 then
 		return "<C-p>"
@@ -99,7 +124,6 @@ vim.keymap.set("n", "<localleader>ip", function()
 	end
 end, { desc = "Initialize Molten for python3", silent = true })
 
-vim.keymap.set("n", "<localleader>e", ":MoltenEvaluateOperator<CR>", { desc = "evaluate operator", silent = true })
 vim.keymap.set(
 	"n",
 	"<localleader>os",
@@ -108,13 +132,16 @@ vim.keymap.set(
 )
 
 vim.keymap.set("n", "<localleader>rr", ":MoltenReevaluateCell<CR>", { desc = "re-eval cell", silent = true })
+
 vim.keymap.set(
 	"v",
 	"<localleader>r",
 	":<C-u>MoltenEvaluateVisual<CR>gv",
 	{ desc = "execute visual selection", silent = true }
 )
+
 vim.keymap.set("n", "<localleader>oh", ":MoltenHideOutput<CR>", { desc = "close output window", silent = true })
+
 vim.keymap.set("n", "<localleader>md", ":MoltenDelete<CR>", { desc = "delete Molten cell", silent = true })
 
 -- if you work with html outputs:
@@ -131,19 +158,12 @@ vim.keymap.set("n", "<localleader>ip", function()
 	end
 end, { desc = "Initialize Molten for python3", silent = true })
 
--- Selecting a Python code cell
-vim.keymap.set("n", "<leader>vib", function()
-	local start_line = vim.fn.search("^```python\\s*$", "bnW")
-	local end_line = vim.fn.search("^```\\s*$", "nW")
-
-	if start_line > 0 and end_line > start_line + 1 then
-		vim.api.nvim_win_set_cursor(0, { start_line + 1, 0 })
-		vim.cmd("normal! V")
-		vim.api.nvim_win_set_cursor(0, { end_line - 1, 0 })
-	else
-		print("No Python code block found")
-	end
-end, { desc = "Select inside Python code block" })
-
 -- Interrupt the kernel
 vim.keymap.set("n", "<leader>z", ":MoltenInterrupt<CR>", { desc = "Interrupt the molten kernel" })
+
+-- Manual treesitter start
+vim.keymap.set("n", "<leader>tss", function()
+	vim.treesitter.start()
+end, { desc = "Manually start treesitter" })
+
+vim.keymap.set("n", "<leader>to", "<cmd>FloatermToggle<CR>", { desc = "Open a floating terminal window" })

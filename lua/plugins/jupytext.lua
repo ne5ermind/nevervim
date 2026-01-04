@@ -1,9 +1,10 @@
 return {
 	"GCBallesteros/jupytext.nvim",
+	lazy = false,
 	opts = {
-		style = "markdown",
-		output_extension = "md",
-		ft = { "python", "markdown" },
-		force_ft = "markdown",
+		style = "percent",
+		output_extension = "auto",
+		ft = { "python", "markdown", "ipynb" },
+		force_ft = nil,
 	},
 }
