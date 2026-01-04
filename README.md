@@ -7,3 +7,9 @@ mv ~/.config/nvim ~/.config/nvim.bak # back up your current configuration if you
 git clone https://github.com/rainyra1n/nevervim ~/.config/nvim
 ```
 and probably spend like 2 hours downloading more stuff for it to work 
+
+![Alpha theme:](https://github.com/ne5ermind/nevervim/blob/main/screenshots/screenshot_05012026_005440.jpg)
+
+![General UI look:](https://github.com/ne5ermind/nevervim/blob/main/screenshots/screenshot_05012026_005632.jpg)
+
+![ipynb support (kind of):](https://github.com/ne5ermind/nevervim/blob/main/screenshots/screenshot_05012026_010330.jpg)
