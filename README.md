@@ -8,8 +8,9 @@ git clone https://github.com/rainyra1n/nevervim ~/.config/nvim
 ```
 and probably spend like 2 hours downloading more stuff for it to work 
 
-![Alpha theme:](https://github.com/ne5ermind/nevervim/blob/main/screenshots/screenshot_05012026_005440.jpg)
+![Alpha theme:](https://github.com/ne5ermind/nevervim/blob/main/screenshots/screenshot_05012026_012117.jpg)
 
-![General UI look:](https://github.com/ne5ermind/nevervim/blob/main/screenshots/screenshot_05012026_005632.jpg)
+![General UI look:](https://github.com/ne5ermind/nevervim/blob/main/screenshots/screenshot_05012026_012312.jpg)
 
-![ipynb support (kind of):](https://github.com/ne5ermind/nevervim/blob/main/screenshots/screenshot_05012026_010330.jpg)
+![ipynb support (kind of):](https://github.com/ne5ermind/nevervim/blob/main/screenshots/screenshot_05012026_012538.jpg)
+
