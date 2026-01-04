@@ -4,7 +4,7 @@ Pretty sure it would need additional configuration on your end but it works on m
 To install:
 ```
 mv ~/.config/nvim ~/.config/nvim.bak # back up your current configuration if you have one
-git clone https://github.com/rainyra1n/nevervim ~/.config/nvim
+git clone https://github.com/ne5ermind/nevervim ~/.config/nvim
 ```
 and probably spend like 2 hours downloading more stuff for it to work 
 
@@ -13,5 +13,6 @@ and probably spend like 2 hours downloading more stuff for it to work
 ![General UI look:](https://github.com/ne5ermind/nevervim/blob/main/screenshots/screenshot_05012026_013230.jpg)
 
 ![ipynb support (kind of):](https://github.com/ne5ermind/nevervim/blob/main/screenshots/screenshot_05012026_013542.jpg)
+
 
 
