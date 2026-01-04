@@ -166,4 +166,5 @@ vim.keymap.set("n", "<leader>tss", function()
 	vim.treesitter.start()
 end, { desc = "Manually start treesitter" })
 
+-- Open a floating terminal window
 vim.keymap.set("n", "<leader>to", "<cmd>FloatermToggle<CR>", { desc = "Open a floating terminal window" })
