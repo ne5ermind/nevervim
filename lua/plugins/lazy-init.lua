@@ -21,7 +21,8 @@ require("lazy").setup({
 	require("plugins.satellite"), -- interactive scrollbar
 	require("plugins.treesitter"), -- code highlighting
 	require("plugins.conform"), -- autoformat
-	require("plugins.coq"), -- powerful tool for autocompletion
+	-- require("plugins.coq"), -- powerful tool for autocompletion
+    require("plugins.cmp"), -- autoccmp
 	require("plugins.theme"), -- theme
 	require("plugins.mini"), -- better textobjects
 	require("plugins.guess-indent"), -- better indentation
